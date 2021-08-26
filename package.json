@@ -1,0 +1,33 @@
+{
+  "name": "quill-delta2html",
+  "version": "1.0.0",
+  "description": "Convert quill's data to HTML",
+  "scripts": {
+    "build": "tsc",
+    "test": "ava"
+  },
+  "dependencies": {
+    "quill-delta": "^4.2.2"
+  },
+  "devDependencies": {
+    "@ava/typescript": "^2.0.0",
+    "@types/node": "^16.6.2",
+    "@typescript-eslint/eslint-plugin": "^4.29.2",
+    "@typescript-eslint/parser": "^4.29.2",
+    "ava": "^3.15.0",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-import-resolver-typescript": "^2.4.0",
+    "eslint-plugin-ava": "^12.0.0",
+    "eslint-plugin-import": "^2.24.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-promise": "^5.1.0",
+    "prettier": "^2.3.2",
+    "standard": "^16.0.3",
+    "ts-node": "^10.2.1",
+    "tsconfig-paths": "^3.11.0",
+    "typescript": "^4.3.5"
+  }
+}

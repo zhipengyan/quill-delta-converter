@@ -1,0 +1,10 @@
+src/
+test/
+.lintstagedrc.json
+.eslintrc.js
+.prettierrc
+.npmignore
+commitlint.config.js
+tsconfig.json
+yarn-error.log
+yarn.lock
