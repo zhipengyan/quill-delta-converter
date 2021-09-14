@@ -45,7 +45,7 @@ export class Blot extends LinkedNodeClass<null> implements LinkedNode {
           html,
         })
       },
-      isTextOp ? (this.op.insert as string) : ''
+      isTextOp(this.op) ? (this.op.insert as string) : ''
     )
   }
 }
