@@ -62,3 +62,15 @@ test('format:link + bold', (t) => {
   t.is(className, 'ql-link')
   t.is(href, link)
 })
+
+test('format:img', (t) => {
+  const imgSrc = 'http://i.cdn.com/dog.jpg'
+  const op: Op = {
+    insert: {
+      image: imgSrc,
+    },
+  }
+  const blot = new Blot(op)
+  debugger
+  t.is(blot.toHtml(), `<img src="${imgSrc}"/>`)
+})
