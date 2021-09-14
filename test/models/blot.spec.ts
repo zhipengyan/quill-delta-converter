@@ -48,19 +48,16 @@ test('format:BIUS', (t) => {
 test('format:link', (t) => {
   const link = 'https://google.com'
   const html = commonToHtml({ link })
-  const className = getAttribute(html, 'class')
   const href = getAttribute(html, 'href')
-  t.is(className, 'ql-link')
   t.is(href, link)
 })
 
 test('format:link + bold', (t) => {
   const link = 'https://google.com'
   const html = commonToHtml({ link, bold: true })
-  const className = getAttribute(html, 'class')
   const href = getAttribute(html, 'href')
-  t.is(className, 'ql-link')
   t.is(href, link)
+  t.is(getAttribute(html, 'target'), '_blank')
 })
 
 test('format:img', (t) => {
@@ -71,6 +68,57 @@ test('format:img', (t) => {
     },
   }
   const blot = new Blot(op)
-  debugger
   t.is(blot.toHtml(), `<img src="${imgSrc}"/>`)
+})
+
+test('format:img + attributes', (t) => {
+  const imageSrc = 'http://i.cdn.com/dog.jpg'
+  const op: Op = {
+    insert: {
+      image: imageSrc,
+    },
+    attributes: {
+      width: 272,
+      height: 92,
+      alt: '',
+    },
+  }
+  const blot = new Blot(op)
+  const html = blot.toHtml()
+  t.is(getAttribute(html, 'src'), imageSrc)
+  t.is(getAttribute(html, 'width'), '272')
+  t.is(getAttribute(html, 'height'), '92')
+})
+
+test('format:video', (t) => {
+  const videoSrc = 'https://player.vimeo.com/video/253905163'
+  const op: Op = {
+    insert: {
+      video: videoSrc,
+    },
+  }
+  const blot = new Blot(op)
+  t.is(
+    blot.toHtml(),
+    `<iframe allowfullscreen="true" frameborder="0" src="${videoSrc}" class="ql-video"></iframe>`
+  )
+})
+
+test('format:video + attribute', (t) => {
+  const videoSrc = 'https://player.vimeo.com/video/253905163'
+  const op: Op = {
+    insert: {
+      video: videoSrc,
+    },
+    attributes: {
+      width: 500,
+      height: 280,
+    },
+  }
+  const blot = new Blot(op)
+  const html = blot.toHtml()
+  t.is(getAttribute(html, 'src'), videoSrc)
+  t.is(getAttribute(html, 'width'), '500')
+  t.is(getAttribute(html, 'height'), '280')
+  t.is(getAttribute(html, 'class'), 'ql-video')
 })
