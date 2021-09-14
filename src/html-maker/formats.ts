@@ -20,13 +20,15 @@ export const FORMAT_MATCHERS: Record<string, Matcher> = {
   link: {
     type: 'format',
     tagName: 'a',
-    classNames: 'ql-link',
     attributes(_value: MatcherValue, attributes?: AttributeMap) {
+      const attrs = {
+        target: '_blank',
+      }
       const href = attributes?.link
       if (href) {
-        return { href }
+        return { ...attrs, href }
       }
-      return {}
+      return attrs
     },
   },
   image: {
@@ -47,12 +49,18 @@ export const FORMAT_MATCHERS: Record<string, Matcher> = {
     scope: 'block',
     tagName: 'iframe',
     classNames: 'ql-video',
-    attributes(value: MatcherValue) {
-      return {
+    attributes(value: MatcherValue, attributes?: AttributeMap) {
+      const rt: Record<string, string> = {
         src: value as string,
         frameborder: '0',
         allowfullscreen: 'true',
       }
+      Object.keys(attributes || {}).forEach((key) => {
+        if (['height', 'width'].indexOf(key) > -1) {
+          rt[key] = attributes[key]
+        }
+      })
+      return rt
     },
   },
   code: {
