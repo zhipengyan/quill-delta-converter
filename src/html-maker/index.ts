@@ -35,23 +35,6 @@ export function isTextNode(html: string) {
   return !html.trim().match(/^<.+>$/)
 }
 
-export function attachAttributes(
-  html: string,
-  attributes: Record<string, string>
-) {
-  const attributesStr = Object.keys(attributes).reduce((str, key) => {
-    return (str += ` ${key}="${attributes[key]}"`)
-  }, '')
-  if (!html.match(/^</)) {
-    html = `<span ${attributesStr}>${html}</span>`
-  } else {
-    html = html.replace(/^<[^>]+/, (match) => {
-      return `${match} ${attributesStr}`
-    })
-  }
-  return html
-}
-
 export function getAttribute(html: string, name: string) {
   if (isTextNode(html)) {
     return null
@@ -78,9 +61,19 @@ export function setAttribute(html: string, name: string, value: string) {
     return `<span ${attributeStr}>${html}</span>`
   }
 
-  return html.replace(/^<[^>]+/, (match) => {
+  return html.replace(/^<[^>|^/|^ ]+/, (match) => {
     return `${match} ${attributeStr}`
   })
+}
+
+export function setAttributes(
+  html: string,
+  attributes: Record<string, string>
+) {
+  return Object.keys(attributes).reduce(
+    (html, key) => setAttribute(html, key, attributes[key]),
+    html
+  )
 }
 
 export function wrap(html: string, tagName: string) {
@@ -102,6 +95,10 @@ export function unwrap(html: string) {
   })
 }
 
+export function isSelfClose(tagName: string) {
+  return ['img'].indexOf(tagName.toLowerCase()) > -1
+}
+
 export function makeHtml(options: {
   matcher: Matcher
   data?: MatcherValue
@@ -119,7 +116,13 @@ export function makeHtml(options: {
       html
     )
   } else if (matcher.tagName) {
-    html = `<${matcher.tagName}>${html}</${matcher.tagName}>`
+    const tagName =
+      typeof matcher.tagName === 'function'
+        ? matcher.tagName(data)
+        : matcher.tagName
+    html = isSelfClose(tagName)
+      ? `<${tagName}/>`
+      : `<${tagName}>${html}</${tagName}>`
   }
 
   if (matcher.classNames) {
