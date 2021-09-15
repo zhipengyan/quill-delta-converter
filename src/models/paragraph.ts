@@ -42,7 +42,7 @@ export class Paragraph extends LinkedNodeClass<Blot> implements LinkedNode {
           return html
         }
         return makeHtml({
-          data: attributes?.[matcher.name],
+          value: attributes?.[matcher.name],
           matcher,
           attributes,
           html,
