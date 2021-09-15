@@ -41,7 +41,12 @@ export class Paragraph extends LinkedNodeClass<Blot> implements LinkedNode {
         if (hasOneSingleBlockEmbed && matcher.type === 'format') {
           return html
         }
-        return makeHtml({ matcher, attributes, html })
+        return makeHtml({
+          data: attributes?.[matcher.name],
+          matcher,
+          attributes,
+          html,
+        })
       },
       !hasOneSingleBlockEmbed && formatMatchers.length === 0
         ? `<p>${innerHtml}</p>`
