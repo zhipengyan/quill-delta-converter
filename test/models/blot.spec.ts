@@ -122,3 +122,8 @@ test('format:video + attribute', (t) => {
   t.is(getAttribute(html, 'height'), '280')
   t.is(getAttribute(html, 'class'), 'ql-video')
 })
+
+test('format:code', (t) => {
+  t.is(commonToHtml({ code: true }), `<code>${TEXT}</code>`)
+  t.is(commonToHtml({ code: false }), TEXT)
+})
