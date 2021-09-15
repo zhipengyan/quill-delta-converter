@@ -110,9 +110,8 @@ export function makeHtml(options: {
 
   if (matcher.create) {
     html = matcher.create(
-      /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-      (this.op.insert as Record<string, any>)[matcher.name],
-      this.op.attributes,
+      typeof data === 'object' ? data[matcher.name] : data,
+      attributes,
       html
     )
   } else if (matcher.tagName) {
@@ -135,7 +134,7 @@ export function makeHtml(options: {
     } else if (typeof matcher.classNames === 'function') {
       const cls = matcher.classNames(
         typeof data === 'object' ? data : undefined,
-        this.op.attributes
+        attributes
       )
       if (Array.isArray(cls)) {
         newClassNames.push(...cls)

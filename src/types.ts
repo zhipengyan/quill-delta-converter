@@ -32,6 +32,7 @@ export interface Matcher {
       ) => Record<string, string>)
   container?: Matcher
   create?(
+    /** maybe embed data like op.insert.image or attributes[key] like attributes.list  */
     value: MatcherValue,
     attributes?: AttributeMap,
     innerHtml?: string
