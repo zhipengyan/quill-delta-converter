@@ -25,9 +25,9 @@ export function getMatchers(names?: string[]) {
       if (a.type === b.type) {
         return 0
       } else if (a.type === 'attribute') {
-        return -1
+        return 1
       }
-      return 1
+      return -1
     })
 }
 
