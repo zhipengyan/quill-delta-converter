@@ -22,6 +22,7 @@ test('format:code-block', (t) => {
 })
 
 test('format:blockquote', (t) => {
+  const number = 1
   const ops: Op[] = [
     {
       insert: TEXT,
@@ -29,33 +30,35 @@ test('format:blockquote', (t) => {
   ]
   const attributes = {
     blockquote: true,
-    // indent: '1',
+    indent: number,
   }
   const para = new Paragraph(ops, attributes)
   const html = para.toHtml()
   console.log(html)
 
-  t.is(html, `<blockquote>${TEXT}</blockquote>`)
+  t.is(html, `<blockquote class="ql-indent-${number}">${TEXT}</blockquote>`)
 })
 
 test('format:header', (t) => {
+  const number = 2
+  const align = 'center'
   const ops: Op[] = [
     {
       insert: TEXT,
     },
   ]
   const attributes = {
-    header: 1,
+    header: number,
+    align,
   }
   const para = new Paragraph(ops, attributes)
   const html = para.toHtml()
   console.log(html)
 
-  t.pass()
+  t.is(html, `<h${number} class="ql-align-${align}">${TEXT}</h${number}>`)
 })
 
 test('format:list + ordered', (t) => {
-  debugger
   const ops: Op[] = [
     {
       insert: TEXT,
@@ -63,6 +66,8 @@ test('format:list + ordered', (t) => {
   ]
   const attributes = {
     list: 'ordered',
+    indent: '2',
+    align: 'center',
   }
   const para = new Paragraph(ops, attributes)
   const html = para.toHtml()
