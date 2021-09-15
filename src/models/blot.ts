@@ -38,9 +38,9 @@ export class Blot extends LinkedNodeClass<null> implements LinkedNode {
       (html, matcher) => {
         return makeHtml({
           matcher,
-          data: this.isEmbed
+          value: this.isEmbed
             ? (this.op.insert as Record<string, unknown>)[matcher.name]
-            : {},
+            : this.op.attributes[matcher.name],
           attributes: this.op.attributes,
           html,
         })

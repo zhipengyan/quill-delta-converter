@@ -101,23 +101,19 @@ export function isSelfClose(tagName: string) {
 
 export function makeHtml(options: {
   matcher: Matcher
-  data?: MatcherValue
+  value?: MatcherValue
   attributes?: AttributeMap
   html?: string
 }) {
-  const { matcher, data, attributes } = options
+  const { matcher, value, attributes } = options
   let { html } = options
 
   if (matcher.create) {
-    html = matcher.create(
-      typeof data === 'object' ? data[matcher.name] : data,
-      attributes,
-      html
-    )
+    html = matcher.create(value, attributes, html)
   } else if (matcher.tagName) {
     const tagName =
       typeof matcher.tagName === 'function'
-        ? matcher.tagName(data)
+        ? matcher.tagName(value)
         : matcher.tagName
     html = isSelfClose(tagName)
       ? `<${tagName}/>`
@@ -132,10 +128,7 @@ export function makeHtml(options: {
     } else if (Array.isArray(matcher.classNames)) {
       newClassNames.push(...matcher.classNames)
     } else if (typeof matcher.classNames === 'function') {
-      const cls = matcher.classNames(
-        typeof data === 'object' ? data : undefined,
-        attributes
-      )
+      const cls = matcher.classNames(value, attributes)
       if (Array.isArray(cls)) {
         newClassNames.push(...cls)
       } else {
@@ -149,13 +142,11 @@ export function makeHtml(options: {
     let attrs: Record<string, string> = {}
     if (typeof matcher.attributes === 'string') {
       attrs = {
-        [matcher.attributes]: {
-          ...(typeof data === 'object' ? data : {}),
-          ...attributes,
-        }[matcher.attributes],
+        ...attrs,
+        [matcher.attributes]: value ?? attributes[matcher.attributes],
       }
     } else if (typeof matcher.attributes === 'function') {
-      attrs = matcher.attributes(data, attributes)
+      attrs = matcher.attributes(value, attributes)
     }
     html = Object.keys(attrs).reduce((html, key) => {
       return setAttribute(html, key, attrs[key])
