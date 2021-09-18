@@ -16,7 +16,6 @@ test('format:code-block', (t) => {
   }
   const para = new Paragraph(ops, attributes)
   const html = para.toHtml()
-  console.log(html)
 
   t.pass()
 })
@@ -34,7 +33,6 @@ test('format:blockquote', (t) => {
   }
   const para = new Paragraph(ops, attributes)
   const html = para.toHtml()
-  console.log(html)
 
   t.is(html, `<blockquote class="ql-indent-${number}">${TEXT}</blockquote>`)
 })
@@ -53,7 +51,6 @@ test('format:header', (t) => {
   }
   const para = new Paragraph(ops, attributes)
   const html = para.toHtml()
-  console.log(html)
 
   t.is(html, `<h${number} class="ql-align-${align}">${TEXT}</h${number}>`)
 })
@@ -71,7 +68,6 @@ test('format:list + ordered', (t) => {
   }
   const para = new Paragraph(ops, attributes)
   const html = para.toHtml()
-  console.log(html)
 
   t.pass()
 })
