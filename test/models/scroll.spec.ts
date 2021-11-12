@@ -12,10 +12,3 @@ test('scroll constructor', (t) => {
       scroll.children[0].children[0] instanceof Blot
   )
 })
-
-test('scroll.toHtml', (t) => {
-  const scroll = new Scroll(
-    new Delta([{ insert: 'HelloWorld\n', attributes: { bold: true } }])
-  )
-  t.is(scroll.toHtml(), '<p><b>HelloWorld</b></p>')
-})

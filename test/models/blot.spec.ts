@@ -1,7 +1,7 @@
 import test from 'ava'
 import { Op, AttributeMap } from '@src/types'
 import { Blot } from '@src/models/blot'
-import { getAttribute } from '@src/html-maker'
+import { getAttribute } from '@src/html-maker/utils'
 
 const TEXT = 'Hello World!'
 
