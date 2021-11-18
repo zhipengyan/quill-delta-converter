@@ -5,16 +5,25 @@ export const FORMATS: Record<
   string,
   (options?: ConvertOptions) => HtmlConvertResult
 > = {
-  bold: () => ({ tagName: 'b' }),
-  italic: () => ({ tagName: 'i' }),
+  bold: () => ({ tagName: 'strong' }),
+  italic: () => ({ tagName: 'em' }),
   underline: () => ({ tagName: 'u' }),
   strike: () => ({ tagName: 's' }),
+  script: (options) => {
+    if (options.attributes?.script === 'super') {
+      return { tagName: 'sup' }
+    } else if (options.attributes?.script === 'sub') {
+      return { tagName: 'sub' }
+    }
+    return {}
+  },
   link(options) {
     return {
       tagName: 'a',
       attributes: {
-        href: options.attributes?.link,
         target: '_blank',
+        rel: 'noopener noreferrer',
+        href: options.attributes?.link,
       },
     }
   },
@@ -67,7 +76,7 @@ export const FORMATS: Record<
   },
   list(options) {
     const { attributes } = options
-    const wrapperTagname = attributes?.list === 'ordered' ? 'ol' : 'ul'
+    const wrapperTagname = 'ol' // attributes?.list === 'ordered' ? 'ol' : 'ul'
 
     return {
       innerHtml: `<span class="ql-ui" contenteditable="false"></span>${options.content}`,

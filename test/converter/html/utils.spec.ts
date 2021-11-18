@@ -38,6 +38,10 @@ test('getAttribute', (t) => {
     'text bold'
   )
   t.is(getAttribute("<img src='./img.jpg' />", 'src'), './img.jpg')
+  t.is(
+    getAttribute('<p><span class="ql-size-large">text</span></p>', 'class'),
+    null
+  )
 })
 
 test('removeAttribute', (t) => {
@@ -78,6 +82,17 @@ test('removeAttribute', (t) => {
     '<span>hello</span>'
   )
   t.is(removeAttribute("<img src='./img.jpg' />", 'src'), '<img />')
+  t.is(
+    removeAttribute('<p><span class="ql-size-large">text</span></p>', 'class'),
+    '<p><span class="ql-size-large">text</span></p>'
+  )
+  t.is(
+    removeAttribute(
+      '<p class="temp"><span class="ql-size-large">text</span></p>',
+      'class'
+    ),
+    '<p><span class="ql-size-large">text</span></p>'
+  )
 })
 
 test('setAttribute', (t) => {
@@ -100,6 +115,14 @@ test('setAttribute', (t) => {
   t.is(
     setAttribute('<img class="dark"/>', 'class', 'text'),
     '<img class="text"/>'
+  )
+  t.is(
+    setAttribute(
+      '<p class="temp"><span class="ql-size-large">text</span></p>',
+      'class',
+      'ql-indent-1'
+    ),
+    '<p class="ql-indent-1"><span class="ql-size-large">text</span></p>'
   )
 })
 

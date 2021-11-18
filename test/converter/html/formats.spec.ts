@@ -2,10 +2,22 @@ import test from 'ava'
 import { FORMATS } from '@src/converter/html/formats'
 
 test('formats.bius', (t) => {
-  t.deepEqual(FORMATS.bold(), { tagName: 'b' })
-  t.deepEqual(FORMATS.italic(), { tagName: 'i' })
+  t.deepEqual(FORMATS.bold(), { tagName: 'strong' })
+  t.deepEqual(FORMATS.italic(), { tagName: 'em' })
   t.deepEqual(FORMATS.underline(), { tagName: 'u' })
   t.deepEqual(FORMATS.strike(), { tagName: 's' })
+})
+
+test('formats.script', (t) => {
+  t.deepEqual(
+    FORMATS.script({ content: '', attributes: { script: 'super' } }),
+    {
+      tagName: 'sup',
+    }
+  )
+  t.deepEqual(FORMATS.script({ content: '', attributes: { script: 'sub' } }), {
+    tagName: 'sub',
+  })
 })
 
 test('formats.link', (t) => {
@@ -19,6 +31,7 @@ test('formats.link', (t) => {
       attributes: {
         href: 'https://example.com',
         target: '_blank',
+        rel: 'noopener noreferrer',
       },
     }
   )
@@ -137,7 +150,7 @@ test('formats.list', (t) => {
         'data-list': 'bullet',
       },
       wrapper: {
-        tagName: 'ul',
+        tagName: 'ol',
       },
     }
   )
@@ -156,7 +169,7 @@ test('formats.list', (t) => {
         'data-list': 'checked',
       },
       wrapper: {
-        tagName: 'ul',
+        tagName: 'ol',
       },
     }
   )

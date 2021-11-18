@@ -16,12 +16,12 @@ test('htmlConverter.plain', (t) => {
 
 test('htmlConverter.bold', (t) => {
   const result = converter.convert('text', { bold: true })
-  t.is(result.html, '<b>text</b>')
+  t.is(result.html, '<strong>text</strong>')
 })
 
 test('htmlConverter.italic', (t) => {
   const result = converter.convert('text', { italic: true })
-  t.is(result.html, '<i>text</i>')
+  t.is(result.html, '<em>text</em>')
 })
 
 test('htmlConverter.underline', (t) => {
@@ -37,7 +37,10 @@ test('htmlConverter.strike', (t) => {
 test('htmlConverter.link', (t) => {
   const { html } = converter.convert('text', { link: 'http://example.com' })
   t.truthy(
-    fuzzyEqual(html, '<a target="_blank" href="http://example.com">text</a>')
+    fuzzyEqual(
+      html,
+      '<a target="_blank" rel="noreferrer noopener" href="http://example.com">text</a>'
+    )
   )
 })
 
@@ -125,7 +128,7 @@ test('htmlConverter.list', (t) => {
     )
   )
   t.deepEqual(bullet.wrapper, {
-    tagName: 'ul',
+    tagName: 'ol',
   })
 
   const checked = converter.convert('list', { list: 'checked' })
@@ -136,7 +139,7 @@ test('htmlConverter.list', (t) => {
     )
   )
   t.deepEqual(checked.wrapper, {
-    tagName: 'ul',
+    tagName: 'ol',
   })
 
   const unchecked = converter.convert('list', { list: 'unchecked' })
@@ -147,6 +150,49 @@ test('htmlConverter.list', (t) => {
     )
   )
   t.deepEqual(unchecked.wrapper, {
-    tagName: 'ul',
+    tagName: 'ol',
   })
+})
+
+test('htmlConverter.align', (t) => {
+  const { html } = converter.convert('<h1>align</h1>', { align: 'center' })
+  t.is(html, '<h1 class="ql-align-center">align</h1>')
+})
+
+test('htmlConverter.background', (t) => {
+  const { html } = converter.convert('text', { background: 'red' })
+  t.is(html, '<span style="background-color: red;">text</span>')
+
+  const { html: anotherHtml } = converter.convert('<b>text</b>', {
+    background: 'red',
+  })
+  t.is(anotherHtml, '<b style="background-color: red;">text</b>')
+})
+
+test('htmlConverter.color', (t) => {
+  const { html } = converter.convert('<i>text</i>', { color: '#ff00ff' })
+  t.is(html, '<i style="color: #ff00ff;">text</i>')
+})
+
+test('htmlConverter.direction', (t) => {
+  const { html } = converter.convert('<p>direction</p>', { direction: 'rtl' })
+  t.is(html, '<p class="ql-direction-rtl">direction</p>')
+})
+
+test('htmlConverter.font', (t) => {
+  const { html } = converter.convert('<span>font</span>', { font: 'sofia' })
+  t.is(html, '<span class="ql-font-sofia">font</span>')
+})
+
+test('htmlConverter.size', (t) => {
+  const { html } = converter.convert(
+    '<span class="ql-font-sofia">size</span>',
+    { size: 'large' }
+  )
+  t.is(html, '<span class="ql-font-sofia ql-size-large">size</span>')
+})
+
+test('htmlConverter.indent', (t) => {
+  const { html } = converter.convert('<p>indent</p>', { indent: 2 })
+  t.is(html, '<p class="ql-indent-2">indent</p>')
 })

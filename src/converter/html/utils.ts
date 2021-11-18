@@ -6,17 +6,19 @@ export function getAttribute(html: string, name: string) {
   if (isTextNode(html)) {
     return null
   }
-  const reg1 = new RegExp(` ${name}='(.*?)'`, 'i')
-  const reg2 = new RegExp(` ${name}="(.*?)"`, 'i')
-  const match = html.match(reg1) || html.match(reg2)
+  const reg1 = new RegExp(`^<\\w*[^>]* ${name}='(.*?)'`, 'i')
+  const reg2 = new RegExp(`^<\\w*[^>]* ${name}="(.*?)"`, 'i')
+  const match = html.trim().match(reg1) || html.trim().match(reg2)
   return match?.[1] ?? null
 }
 
 export function removeAttribute(html: string, name: string) {
   if (getAttribute(html, name) !== null) {
-    const reg1 = new RegExp(` ${name}='(.*?)'`, 'i')
-    const reg2 = new RegExp(` ${name}="(.*?)"`, 'i')
-    html = html.replace(reg1, '').replace(reg2, '')
+    const reg1 = new RegExp(`^<\\w*[^>]*( ${name}='(.*?)')`, 'i')
+    const reg2 = new RegExp(`^<\\w*[^>]*( ${name}="(.*?)")`, 'i')
+    html = html
+      .replace(reg1, (match, $1) => match.replace($1, ''))
+      .replace(reg2, (match, $1) => match.replace($1, ''))
   }
   return html
 }

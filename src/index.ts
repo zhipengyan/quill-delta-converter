@@ -46,10 +46,8 @@ export class DeltaConverter {
         return this.htmlConverter.convert(op.insert, op.attributes)
       })
       const blotHtml = this.getWrappedHtml(blotResults)
-      const paraResult = this.htmlConverter.convert(blotHtml, attributes)
-      if (!paraResult.wrapper && para.needWrapPTag) {
-        paraResult.html = `<p>${paraResult.html}</p>`
-      }
+      const innerHtml = para.needWrapPTag ? `<p>${blotHtml}</p>` : blotHtml
+      const paraResult = this.htmlConverter.convert(innerHtml, attributes)
       return paraResult
     })
     return this.getWrappedHtml(paraResults)

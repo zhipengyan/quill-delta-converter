@@ -33,7 +33,8 @@ export class Paragraph extends LinkedNodeClass<Blot> implements LinkedNode {
     }
     if (
       Object.keys(this.attributes).some(
-        (key) => ['blockquote', 'header'].indexOf(key) > -1
+        (key) =>
+          ['blockquote', 'header', 'list', 'code-block'].indexOf(key) > -1
       )
     ) {
       return false

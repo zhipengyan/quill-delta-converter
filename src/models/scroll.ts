@@ -17,13 +17,6 @@ export class Scroll extends LinkedNodeClass<Paragraph> implements LinkedNode {
     this.constructParagraphs()
   }
 
-  public toHtml() {
-    const html = this.children.reduce((html, child) => {
-      return html + child.toHtml()
-    }, '')
-    return html
-  }
-
   private constructParagraphs() {
     const paragraphInfos = this.splitByReturn()
     paragraphInfos.forEach(({ ops, attributes }) => {
@@ -42,7 +35,7 @@ export class Scroll extends LinkedNodeClass<Paragraph> implements LinkedNode {
         if (op.insert.indexOf('\n') > -1) {
           const texts = op.insert.split('\n')
           paragraphInfos.push(
-            ...texts.map((text, i) => ({
+            ...texts.slice(0, -1).map((text, i) => ({
               ops: [
                 ...(i === 0 ? opsInCurrentLine : []),
                 ...(text ? [{ insert: text, attributes: op.attributes }] : []),
@@ -51,6 +44,10 @@ export class Scroll extends LinkedNodeClass<Paragraph> implements LinkedNode {
             }))
           )
           opsInCurrentLine = []
+          // like \ntext
+          if (texts.slice(-1)[0]) {
+            opsInCurrentLine.push({ insert: texts.slice(-1)[0], attributes })
+          }
         } else {
           opsInCurrentLine.push(op)
         }
