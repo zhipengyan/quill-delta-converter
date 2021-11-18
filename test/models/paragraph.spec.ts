@@ -1,73 +1,23 @@
 import test from 'ava'
-import { Op, AttributeMap } from '@src/types'
-import { Paragraph } from '@src/models/Paragraph'
-import { getAttribute } from '@src/html-maker'
+import { Op } from '@src/types'
+import { Paragraph } from '@src/models/paragraph'
 
 const TEXT = 'Hello World!'
 
-test('format:code-block', (t) => {
+test('paragraph', (t) => {
   const ops: Op[] = [
     {
       insert: TEXT,
     },
-  ]
-  const attributes = {
-    'code-block': true,
-  }
-  const para = new Paragraph(ops, attributes)
-  const html = para.toHtml()
-
-  t.pass()
-})
-
-test('format:blockquote', (t) => {
-  const number = 1
-  const ops: Op[] = [
     {
       insert: TEXT,
+      attributes: { color: 'red' },
     },
   ]
-  const attributes = {
-    blockquote: true,
-    indent: number,
-  }
-  const para = new Paragraph(ops, attributes)
-  const html = para.toHtml()
+  const para = new Paragraph(ops, { list: 'ordered' })
 
-  t.is(html, `<blockquote class="ql-indent-${number}">${TEXT}</blockquote>`)
-})
-
-test('format:header', (t) => {
-  const number = 2
-  const align = 'center'
-  const ops: Op[] = [
-    {
-      insert: TEXT,
-    },
-  ]
-  const attributes = {
-    header: number,
-    align,
-  }
-  const para = new Paragraph(ops, attributes)
-  const html = para.toHtml()
-
-  t.is(html, `<h${number} class="ql-align-${align}">${TEXT}</h${number}>`)
-})
-
-test('format:list + ordered', (t) => {
-  const ops: Op[] = [
-    {
-      insert: TEXT,
-    },
-  ]
-  const attributes = {
-    list: 'ordered',
-    indent: '2',
-    align: 'center',
-  }
-  const para = new Paragraph(ops, attributes)
-  const html = para.toHtml()
-
-  t.pass()
+  t.is(para.children.length, 2)
+  t.is(para.ops.length, 2)
+  t.is(para.children[0].next, para.children[1])
+  t.is(para.children[1].prev, para.children[0])
 })

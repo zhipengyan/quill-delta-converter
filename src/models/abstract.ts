@@ -20,8 +20,4 @@ export class LinkedNodeClass<T extends LinkedNode> {
     child.parent = this
     this.children.push(child)
   }
-
-  public toHtml(): string {
-    return ''
-  }
 }

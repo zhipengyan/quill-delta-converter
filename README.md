@@ -1,5 +1,5 @@
-# quill-delta2html
-Convert [quill](https://github.com/quilljs/quill) data delta to html without using dom
+# quill-delta-converter
+Convert [quill](https://github.com/quilljs/quill) data delta to html and markdown without using dom
 
 # scripts
 ``` bash 
