@@ -1,7 +1,8 @@
 {
   "name": "quill-delta2html",
-  "version": "1.0.0",
-  "description": "Convert quill's data to HTML",
+  "version": "0.0.1",
+  "description": "Convert quill's data to HTML or Markdown",
+  "author": "zhipengyan <yanzhipeng2012@gmail.com>",
   "scripts": {
     "build": "tsc",
     "test": "ava"
@@ -33,5 +34,9 @@
     "ts-node": "^10.2.1",
     "tsconfig-paths": "^3.11.0",
     "typescript": "^4.3.5"
+  },
+  "license": {
+    "type": "MIT",
+    "url": "https://www.opensource.org/licenses/mit-license.php"
   }
 }
