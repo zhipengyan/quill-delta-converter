@@ -3,6 +3,12 @@
   "version": "0.0.1",
   "description": "Convert quill's data to HTML or Markdown",
   "author": "zhipengyan <yanzhipeng2012@gmail.com>",
+  "keywords": [
+    "quill",
+    "converter",
+    "html",
+    "markdown"
+  ],
   "scripts": {
     "build": "tsc",
     "test": "ava"
