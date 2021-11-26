@@ -1,6 +1,6 @@
 {
   "name": "quill-delta-converter",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Convert quill's data to HTML or Markdown",
   "author": "zhipengyan <yanzhipeng2012@gmail.com>",
   "keywords": [
@@ -12,13 +12,7 @@
   "scripts": {
     "build": "tsc",
     "test": "ava",
-    "prepare": "yarn build",
-    "release": "np"
-  },
-  "np": {
-    "yarn": true,
-    "cleanup": false,
-    "message": "chore: 🤖 bump up v%s"
+    "prepare": "yarn test && yarn build"
   },
   "dependencies": {
     "deep-equal": "^2.0.5",
@@ -44,7 +38,6 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-promise": "^5.1.0",
-    "np": "^7.6.0",
     "prettier": "^2.3.2",
     "standard": "^16.0.3",
     "ts-node": "^10.2.1",
