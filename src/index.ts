@@ -3,7 +3,7 @@ import { HtmlConverter } from './converter/html'
 import { Scroll } from './models/scroll'
 import isEqual from 'deep-equal'
 import escaptHtml from 'escape-html'
-import {isTextOp} from './utils'
+import { isTextOp } from './utils'
 
 export class DeltaConverter {
   public htmlConverter: HtmlConverter
