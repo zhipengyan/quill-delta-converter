@@ -1,6 +1,6 @@
 {
   "name": "quill-delta-converter",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Convert quill's data to HTML or Markdown",
   "author": "zhipengyan <yanzhipeng2012@gmail.com>",
   "keywords": [
