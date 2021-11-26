@@ -2,6 +2,8 @@ import type { Delta, Config, HtmlConvertResult } from './types'
 import { HtmlConverter } from './converter/html'
 import { Scroll } from './models/scroll'
 import isEqual from 'deep-equal'
+import escaptHtml from 'escape-html'
+import {isTextOp} from './utils'
 
 export class DeltaConverter {
   public htmlConverter: HtmlConverter
@@ -43,7 +45,10 @@ export class DeltaConverter {
       const { children = [], attributes } = para
       const blotResults = children.map((blot) => {
         const { op } = blot
-        return this.htmlConverter.convert(op.insert, op.attributes)
+        return this.htmlConverter.convert(
+          isTextOp(op) ? escaptHtml(op.insert as string) : op.insert,
+          op.attributes
+        )
       })
       const blotHtml = this.getWrappedHtml(blotResults)
       const innerHtml = para.needWrapPTag ? `<p>${blotHtml}</p>` : blotHtml
