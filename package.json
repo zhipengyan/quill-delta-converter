@@ -9,6 +9,7 @@
     "html",
     "markdown"
   ],
+  "typings": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
     "test": "ava",
