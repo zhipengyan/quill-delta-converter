@@ -8,3 +8,6 @@ commitlint.config.js
 tsconfig.json
 yarn-error.log
 yarn.lock
+ava.config.js
+.DS_Store
+.gitignore

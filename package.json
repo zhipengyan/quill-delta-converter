@@ -1,6 +1,6 @@
 {
   "name": "quill-delta2html",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "description": "Convert quill's data to HTML or Markdown",
   "author": "zhipengyan <yanzhipeng2012@gmail.com>",
   "keywords": [
@@ -11,7 +11,13 @@
   ],
   "scripts": {
     "build": "tsc",
-    "test": "ava"
+    "test": "ava",
+    "release": "np"
+  },
+  "np": {
+    "yarn": true,
+    "cleanup": false,
+    "message": "chore: 🤖 bump up v%s"
   },
   "dependencies": {
     "deep-equal": "^2.0.5",
@@ -35,11 +41,15 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-promise": "^5.1.0",
+    "np": "^7.6.0",
     "prettier": "^2.3.2",
     "standard": "^16.0.3",
     "ts-node": "^10.2.1",
     "tsconfig-paths": "^3.11.0",
     "typescript": "^4.3.5"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
   },
   "license": {
     "type": "MIT",
