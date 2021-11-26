@@ -12,6 +12,7 @@
   "scripts": {
     "build": "tsc",
     "test": "ava",
+    "prepare": "yarn build",
     "release": "np"
   },
   "np": {
