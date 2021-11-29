@@ -42,3 +42,8 @@ yarn test
 # debug test
 yarn test debug --break test/test-file-path/filename.spec.ts
 ```
+
+# Todos
+- [ ] markdown
+- [ ] support table
+- [ ] detailed documentation
