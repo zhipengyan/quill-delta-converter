@@ -2,7 +2,7 @@ import test from 'ava'
 import { DeltaConverter } from '@src/index'
 import { fullFormatsDelta } from './__data__/full-formats'
 
-test('full-formats', (t) => {
+test('toHtml.full-formats', (t) => {
   const converter = new DeltaConverter()
   const html = converter.toHtml(fullFormatsDelta)
   const expectedHtml = [
@@ -32,5 +32,34 @@ test('full-formats', (t) => {
     '<p><a href="http://example.com" rel="noopener noreferrer" target="_blank">link</a></p>',
   ].join('')
   t.is(html, expectedHtml)
-  t.pass()
+})
+
+test('toMarkdown.full-formats', (t) => {
+  const converter = new DeltaConverter()
+  const md = converter.toMarkdown(fullFormatsDelta)
+  const expectedMd = [
+    '**bold**_italic_<u>underline</u>~~strike<u>_**bius**_</u>~~',
+    'size-huge',
+    '# header1',
+    '## header2',
+    'font-color',
+    'background-color',
+    'x<sup>2</sup>',
+    'x<sub>2</sub>',
+    '> blockquote',
+    '1. o1',
+    '1. o2',
+    '  1. o2-1',
+    '  1. o2-2',
+    '1. o3',
+    '- u1',
+    '- u2',
+    '  - u2-1',
+    '- u3',
+    '  indent1',
+    '    indent2',
+    'direction-rtl',
+    '[link](http://example.com)',
+  ].join('\n')
+  t.is(md, expectedMd)
 })
